@@ -12,7 +12,7 @@
 
 using namespace std;
 
-enum KEYS{UP, DOWN, LEFT, RIGHT};
+enum KEYS{UP, DOWN, LEFT, RIGHT , W, S, A, D};
 ALLEGRO_BITMAP *bloco2 = NULL;
 ALLEGRO_BITMAP *bloco1 = NULL;
 int mapaAtual = 0;
@@ -136,9 +136,9 @@ void DrawMap2(){
             else{
                 al_draw_bitmap(bloco1, j * BLOCKSIZE, i * BLOCKSIZE, 0);
         }
+      }
     }
-    }
-}
+  }
 
 bool colisao(int px, int py){
    int x1=py/BLOCKSIZE;
@@ -180,8 +180,7 @@ int main(){
     int posX2 = 265;
     int posY2 = 265;
 
-    bool keys[4] = {false, false, false, false};
-    bool keys2[4] = {false, false, false, false};
+    bool keys[8] = {false, false, false, false, false, false, false, false};
 
     al_init();
     display = al_create_display(SCREENWIDTH, SCREENHEIGHT);
@@ -200,19 +199,18 @@ int main(){
 
     ALLEGRO_BITMAP *player = al_load_bitmap("medico1.png");
     ALLEGRO_BITMAP *player2 = al_load_bitmap("medico2.png");
-    ALLEGRO_BITMAP *pacienteRoxo1 = al_load_bitmap("paciente_roxo.png");
-    ALLEGRO_BITMAP *pacienteRoxo2 = al_load_bitmap("paciente_roxo.png");
-    ALLEGRO_BITMAP *pacienteRoxo3 = al_load_bitmap("paciente_roxo.png");
-    ALLEGRO_BITMAP *pacienteAmarelo1 = al_load_bitmap("paciente_amarelo.png");
-    ALLEGRO_BITMAP *pacienteAmarelo2 = al_load_bitmap("paciente_amarelo.png");
-    ALLEGRO_BITMAP *pacienteAmarelo3 = al_load_bitmap("paciente_amarelo.png");
+    ALLEGRO_BITMAP *pacienteAmarelo = al_load_bitmap("paciente_amarelo.png");
+    ALLEGRO_BITMAP *pacienteRoxo = al_load_bitmap("paciente_roxo.png");
+    ALLEGRO_BITMAP *pacienteVerde = al_load_bitmap("paciente_verde.png");
+    ALLEGRO_BITMAP *pacienteVermelho = al_load_bitmap("paciente_vermelho.png");
+    ALLEGRO_BITMAP *pacienteLaranja = al_load_bitmap("paciente_laranja.png");
+    ALLEGRO_BITMAP *pacienteRosa = al_load_bitmap("paciente_rosa.png");
 
     //ALLEGRO_BITMAP *bloco2 = NULL;
     //ALLEGRO_BITMAP *bloco1 = NULL;
 
     bloco2 = al_load_bitmap("Bloco2.bmp");
     bloco1 = al_load_bitmap("Bloco1.bmp");
-
 
     al_start_timer(timer);
 
@@ -263,8 +261,54 @@ int main(){
            posX += keys[RIGHT] * 2;
         }
 
+    if(events.type == ALLEGRO_EVENT_KEY_DOWN){
+            switch(events.keyboard.keycode){
+                case ALLEGRO_KEY_W:
+                    keys[W] = true;
+                    break;
+                case ALLEGRO_KEY_S:
+                    keys[S] = true;
+                    break;
+                case ALLEGRO_KEY_A:
+                    keys[A] = true;
+                    break;
+                case ALLEGRO_KEY_D:
+                    keys[D] = true;
+                    break;
+            }
+        }
+        else if(events.type == ALLEGRO_EVENT_KEY_UP) {
+            switch(events.keyboard.keycode){
+                case ALLEGRO_KEY_W:
+                    keys[W] = false;
+                    break;
+                case ALLEGRO_KEY_S:
+                    keys[S] = false;
+                    break;
+                case ALLEGRO_KEY_A:
+                    keys[A] = false;
+                    break;
+                case ALLEGRO_KEY_D:
+                    keys[D] = false;
+                    break;
+                case ALLEGRO_KEY_ESCAPE:
+                    done = true;
+                    break;
+            }
+        }
 
-
+        if (!colisao(posX2, posY2 - 2)){
+           posY2 -= keys[W] * 2;
+        }
+        if (!colisao(posX2, posY2 + 2)){
+           posY2 += keys[S] * 2;
+        }
+        if (!colisao(posX2 - 2, posY2)){
+           posX2 -= keys[A] * 2;
+        }
+        if (!colisao(posX2 + 2, posY2)){
+           posX2 += keys[D] * 2;
+        }
 
         if (redesenha && cont < 1) {
             DrawMap0();
@@ -276,7 +320,7 @@ int main(){
                 cont++;
             }
             if (p1) {
-                al_draw_bitmap(pacienteRoxo1, (4 * BLOCKSIZE), (18 * BLOCKSIZE), 0);
+                al_draw_bitmap(pacienteAmarelo, (4 * BLOCKSIZE), (18 * BLOCKSIZE), 0);
             }
 
             if (posX >= (7 * BLOCKSIZE) && posX <= (8 * BLOCKSIZE) && posY >= (6 * BLOCKSIZE) && posY <= (7 * BLOCKSIZE) && p2) {
@@ -284,7 +328,7 @@ int main(){
                 cont++;
             }
             if (p2) {
-                al_draw_bitmap(pacienteRoxo2, (7 * BLOCKSIZE), (6 * BLOCKSIZE), 0);
+                al_draw_bitmap(pacienteRoxo, (7 * BLOCKSIZE), (6 * BLOCKSIZE), 0);
             }
 
             if (posX >= (18 * BLOCKSIZE) && posX <= (19 * BLOCKSIZE) && posY >= (18 * BLOCKSIZE) && posY <= (19 * BLOCKSIZE) && p3) {
@@ -292,7 +336,7 @@ int main(){
                 cont++;
             }
             if (p3) {
-                al_draw_bitmap(pacienteRoxo3, (18 * BLOCKSIZE), (18 * BLOCKSIZE), 0);
+                al_draw_bitmap(pacienteVerde, (18 * BLOCKSIZE), (18 * BLOCKSIZE), 0);
             }
 
             if (posX >= (29 * BLOCKSIZE) && posX <= (30 * BLOCKSIZE) && posY >= (6 * BLOCKSIZE) && posY <= (7 * BLOCKSIZE) && p4) {
@@ -300,7 +344,7 @@ int main(){
                 cont++;
             }
             if (p4) {
-                al_draw_bitmap(pacienteAmarelo1, (29 * BLOCKSIZE), (6 * BLOCKSIZE), 0);
+                al_draw_bitmap(pacienteVermelho, (29 * BLOCKSIZE), (6 * BLOCKSIZE), 0);
             }
 
             if (posX >= (43 * BLOCKSIZE) && posX <= (44 * BLOCKSIZE) && posY >= (9 * BLOCKSIZE) && posY <= (10 * BLOCKSIZE) && p5) {
@@ -308,7 +352,7 @@ int main(){
                 cont++;
             }
             if (p5) {
-                al_draw_bitmap(pacienteAmarelo2, (43 * BLOCKSIZE), (9 * BLOCKSIZE), 0);
+                al_draw_bitmap(pacienteLaranja, (43 * BLOCKSIZE), (9 * BLOCKSIZE), 0);
             }
 
             if (posX >= (41 * BLOCKSIZE) && posX <= (42 * BLOCKSIZE) && posY >= (19 * BLOCKSIZE) && posY <= (20 * BLOCKSIZE) && p6) {
@@ -316,7 +360,7 @@ int main(){
                 cont++;
             }
             if (p6) {
-                al_draw_bitmap(pacienteAmarelo3, (41 * BLOCKSIZE), (19 * BLOCKSIZE), 0);
+                al_draw_bitmap(pacienteRosa, (41 * BLOCKSIZE), (19 * BLOCKSIZE), 0);
             }
 
             colisao(posX, posY);
@@ -337,7 +381,7 @@ int main(){
           if (posX >= 48 * BLOCKSIZE) {
           mapaAtual = 2;
           DrawMap2();
-          posX = BLOCKSIZE * 27;
+          posX = BLOCKSIZE * 24;
           posY = BLOCKSIZE * 3;
 
           al_draw_bitmap(player, posX, posY, 0);
@@ -351,21 +395,67 @@ int main(){
                 }else{
                 mapaAtual = 2;
           DrawMap2();
-          posX = BLOCKSIZE * 24;
-          posY = BLOCKSIZE * 3;
+          posX2 = BLOCKSIZE * 24;
+          posY2 = BLOCKSIZE * 3;
+          p1 = true, p2 = true, p3 = true, p4 = true, p5 = true, p6 = true;
 
-          al_draw_bitmap(player2, posX, posY, 0);
+          al_draw_bitmap(player2, posX2, posY2, 0);
 
-          colisao(posX, posY);
+          if (posX2 >= (4 * BLOCKSIZE) && posX2 <= (5 * BLOCKSIZE) && posY2 >= (21 * BLOCKSIZE) && posY2 <= (22 * BLOCKSIZE) && p1) {
+                p1 = false;
+                cont++;
+            }
+            if (p1) {
+                al_draw_bitmap(pacienteAmarelo, (5 * BLOCKSIZE), (21 * BLOCKSIZE), 0);
+            }
+
+            if (posX2 >= (6 * BLOCKSIZE) && posX2 <= (7 * BLOCKSIZE) && posY2 >= (14 * BLOCKSIZE) && posY2 <= (15 * BLOCKSIZE) && p2) {
+                p2 = false;
+                cont++;
+            }
+            if (p2) {
+                al_draw_bitmap(pacienteRoxo, (5 * BLOCKSIZE), (14 * BLOCKSIZE), 0);
+            }
+
+            if (posX2 >= (21 * BLOCKSIZE) && posX2 <= (22 * BLOCKSIZE) && posY2 >= (22 * BLOCKSIZE) && posY2 <= (23 * BLOCKSIZE) && p3) {
+                p3 = false;
+                cont++;
+            }
+            if (p3) {
+                al_draw_bitmap(pacienteVerde, (21 * BLOCKSIZE), (22 * BLOCKSIZE), 0);
+            }
+
+            if (posX2 >= (31 * BLOCKSIZE) && posX2 <= (32 * BLOCKSIZE) && posY2 >= (22 * BLOCKSIZE) && posY2 <= (23 * BLOCKSIZE) && p4) {
+                p4 = false;
+                cont++;
+            }
+            if (p4) {
+                al_draw_bitmap(pacienteVermelho, (31 * BLOCKSIZE), (22 * BLOCKSIZE), 0);
+            }
+
+            if (posX2 >= (45 * BLOCKSIZE) && posX2 <= (46 * BLOCKSIZE) && posY2 >= (14 * BLOCKSIZE) && posY2 <= (15 * BLOCKSIZE) && p5) {
+                p5 = false;
+                cont++;
+            }
+            if (p5) {
+                al_draw_bitmap(pacienteLaranja, (45 * BLOCKSIZE), (14 * BLOCKSIZE), 0);
+            }
+
+            if (posX2 >= (45 * BLOCKSIZE) && posX2 <= (46 * BLOCKSIZE) && posY2 >= (21 * BLOCKSIZE) && posY <= (22 * BLOCKSIZE) && p6) {
+                p6 = false;
+                cont++;
+            }
+            if (p6) {
+                al_draw_bitmap(pacienteRosa, (45 * BLOCKSIZE), (21 * BLOCKSIZE), 0);
+            }
+
+          colisao(posX2, posY2);
 
           al_flip_display();
           redesenha=false;
             }
             }
         }
-
-
-
 
     al_destroy_display(display);
     al_destroy_timer(timer);
