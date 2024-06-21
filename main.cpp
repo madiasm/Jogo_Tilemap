@@ -207,6 +207,14 @@ int main(){
     ALLEGRO_BITMAP *pacienteRosa = al_load_bitmap("paciente_rosa.png");
     ALLEGRO_BITMAP *pacienteCurado = al_load_bitmap("paciente_curado.png");
 
+
+    ALLEGRO_BITMAP *seringaAmarela = al_load_bitmap("seringa_amarela.png");
+    ALLEGRO_BITMAP *seringaRoxa = al_load_bitmap("seringa_roxa.png");
+    ALLEGRO_BITMAP *seringaVerde = al_load_bitmap("seringa_verde.png");
+    ALLEGRO_BITMAP *seringaVermelha = al_load_bitmap("seringa_vermelha.png");
+    ALLEGRO_BITMAP *seringaLaranja = al_load_bitmap("seringa_laranja.png");
+    ALLEGRO_BITMAP *seringaRosa = al_load_bitmap("seringa_rosa.png");
+
     //ALLEGRO_BITMAP *bloco2 = NULL;
     //ALLEGRO_BITMAP *bloco1 = NULL;
 
@@ -216,7 +224,7 @@ int main(){
     al_start_timer(timer);
 
     int cont = 0;
-    bool p1 = true, p2 = true, p3 = true, p4 = true, p5 = true, p6 = true;
+    bool p1 = true, p2 = true, p3 = true, p4 = true, p5 = true, p6 = true, p7 = false, p8 = false, p9 = false, p10 = false, p11 = false, p12 = false;
     bool concluiu = false;
 
     while(!done){
@@ -389,6 +397,7 @@ if (!colisao(posX2 + 2, posY2)) {
                 al_draw_bitmap(pacienteRosa, (41 * BLOCKSIZE), (19 * BLOCKSIZE), 0);
             }
 
+
             colisao(posX, posY);
 
             al_flip_display();
@@ -408,17 +417,19 @@ if (!colisao(posX2 + 2, posY2)) {
           if (posX >= 48 * BLOCKSIZE) {
           mapaAtual = 2;
           DrawMap2();
-          posX = BLOCKSIZE * 24;
-          posY = BLOCKSIZE * 3;
+          posX2 = BLOCKSIZE * 24;
+          posY2 = BLOCKSIZE * 3;
 
           colisao(posX, posY);
 
           al_flip_display();
           redesenha=false;
           concluiu = true;
-          p1 = true, p2 = true, p3 = true, p4 = true, p5 = true, p6 = true;
+          p1 = true, p2 = true, p3 = true, p4 = true, p5 = true, p6 = true, p7 = false, p8 = false, p9 = false, p10 = false, p11 = false, p12 = false;
                     }
                 }else{
+                    bool amarelo = false, roxo = false, verde = false, vermelho = false, laranja = false, rosa = false;
+                    int contCurado = 0;
                         DrawMap2();
 
                       colisao(posX2, posY2);
@@ -428,54 +439,157 @@ if (!colisao(posX2 + 2, posY2)) {
                       if (posX2 >= (4 * BLOCKSIZE) && posX2 <= (5 * BLOCKSIZE) && posY2 >= (21 * BLOCKSIZE) && posY2 <= (22 * BLOCKSIZE) && p1) {
                             p1 = false;
                         }
-                        if (p1) {
+                        if (p1 && amarelo == false) {
                             al_draw_bitmap(pacienteAmarelo, (5 * BLOCKSIZE), (21 * BLOCKSIZE), 0);
-                        }else{
-                            al_draw_bitmap(pacienteCurado, (5 * BLOCKSIZE), (21 * BLOCKSIZE), 0);}
+                        } else if (!p1 && p7) {
+                            al_draw_bitmap(pacienteCurado, (5 * BLOCKSIZE), (21 * BLOCKSIZE), 0);
+                            amarelo = true;
+                            contCurado++;
+                        } else if (amarelo) {
+                            al_draw_bitmap(pacienteCurado, (5 * BLOCKSIZE), (21 * BLOCKSIZE), 0);
+                        } else {
+                            al_draw_bitmap(pacienteAmarelo, (5 * BLOCKSIZE), (21 * BLOCKSIZE), 0);
+                        }
 
-                        if (posX2 >= (6 * BLOCKSIZE) && posX2 <= (7 * BLOCKSIZE) && posY2 >= (14 * BLOCKSIZE) && posY2 <= (15 * BLOCKSIZE) && p2) {
+
+
+                        if (posX2 >= (5 * BLOCKSIZE) && posX2 <= (6 * BLOCKSIZE) && posY2 >= (14 * BLOCKSIZE) && posY2 <= (15 * BLOCKSIZE) && p2) {
                             p2 = false;
                         }
-                        if (p2) {
+                        if (p2 && roxo == false) {
                             al_draw_bitmap(pacienteRoxo, (5 * BLOCKSIZE), (14 * BLOCKSIZE), 0);
-                        }else{
-                            al_draw_bitmap(pacienteCurado, (5 * BLOCKSIZE), (14 * BLOCKSIZE), 0);}
+                        } else if (!p2 && p8) {
+                            al_draw_bitmap(pacienteCurado, (5 * BLOCKSIZE), (14 * BLOCKSIZE), 0);
+                            roxo = true;
+                            contCurado++;
+                        } else if (roxo) {
+                            al_draw_bitmap(pacienteCurado, (5 * BLOCKSIZE), (14 * BLOCKSIZE), 0);
+                        } else {
+                            al_draw_bitmap(pacienteRoxo, (5 * BLOCKSIZE), (14 * BLOCKSIZE), 0);
+                        }
+
 
                         if (posX2 >= (21 * BLOCKSIZE) && posX2 <= (22 * BLOCKSIZE) && posY2 >= (22 * BLOCKSIZE) && posY2 <= (23 * BLOCKSIZE) && p3) {
                             p3 = false;
                         }
-                        if (p3) {
+                        if (p3 && verde == false) {
                             al_draw_bitmap(pacienteVerde, (21 * BLOCKSIZE), (22 * BLOCKSIZE), 0);
-                        }else{
-                            al_draw_bitmap(pacienteCurado, (21 * BLOCKSIZE), (22 * BLOCKSIZE), 0);}
+                        } else if (!p3 && p9) {
+                            al_draw_bitmap(pacienteCurado, (21 * BLOCKSIZE), (22 * BLOCKSIZE), 0);
+                            verde = true;
+                            contCurado++;
+                        } else if (verde) {
+                            al_draw_bitmap(pacienteCurado, (21 * BLOCKSIZE), (22 * BLOCKSIZE), 0);
+                        } else {
+                            al_draw_bitmap(pacienteVerde, (21 * BLOCKSIZE), (22 * BLOCKSIZE), 0);
+                        }
 
                         if (posX2 >= (31 * BLOCKSIZE) && posX2 <= (32 * BLOCKSIZE) && posY2 >= (22 * BLOCKSIZE) && posY2 <= (23 * BLOCKSIZE) && p4) {
                             p4 = false;
                         }
-                        if (p4) {
+                        if (p4 && vermelho == false) {
                             al_draw_bitmap(pacienteVermelho, (31 * BLOCKSIZE), (22 * BLOCKSIZE), 0);
-                        }else{
-                            al_draw_bitmap(pacienteCurado, (31 * BLOCKSIZE), (22 * BLOCKSIZE), 0);}
+                        } else if (!p4 && p10) {
+                            al_draw_bitmap(pacienteCurado, (31 * BLOCKSIZE), (22 * BLOCKSIZE), 0);
+                            vermelho = true;
+                            contCurado++;
+                        } else if (vermelho) {
+                            al_draw_bitmap(pacienteCurado, (31 * BLOCKSIZE), (22 * BLOCKSIZE), 0);
+                        } else {
+                            al_draw_bitmap(pacienteVermelho, (31 * BLOCKSIZE), (22 * BLOCKSIZE), 0);
+                        }
 
                         if (posX2 >= (45 * BLOCKSIZE) && posX2 <= (46 * BLOCKSIZE) && posY2 >= (14 * BLOCKSIZE) && posY2 <= (15 * BLOCKSIZE) && p5) {
                             p5 = false;
                         }
-                        if (p5) {
+                        if (p5 && laranja == false) {
                             al_draw_bitmap(pacienteLaranja, (45 * BLOCKSIZE), (14 * BLOCKSIZE), 0);
-                        }else{
-                            al_draw_bitmap(pacienteCurado, (45 * BLOCKSIZE), (14 * BLOCKSIZE), 0);}
+                        } else if (!p5 && p11) {
+                            al_draw_bitmap(pacienteCurado, (45 * BLOCKSIZE), (14 * BLOCKSIZE), 0);
+                            laranja = true;
+                            contCurado++;
+                        } else if (laranja) {
+                            al_draw_bitmap(pacienteCurado, (45 * BLOCKSIZE), (14 * BLOCKSIZE), 0);
+                        } else {
+                            al_draw_bitmap(pacienteLaranja, (45 * BLOCKSIZE), (14 * BLOCKSIZE), 0);
+                        }
 
                         if (posX2 >= (45 * BLOCKSIZE) && posX2 <= (46 * BLOCKSIZE) && posY2 >= (21 * BLOCKSIZE) && posY <= (22 * BLOCKSIZE) && p6) {
                             p6 = false;
                         }
-                        if (p6) {
+                        if (p6 && rosa == false) {
                             al_draw_bitmap(pacienteRosa, (45 * BLOCKSIZE), (21 * BLOCKSIZE), 0);
-                        }else{
-                            al_draw_bitmap(pacienteCurado, (45 * BLOCKSIZE), (21 * BLOCKSIZE), 0);}
+                        } else if (!p6 && p12) {
+                            al_draw_bitmap(pacienteCurado, (45 * BLOCKSIZE), (21 * BLOCKSIZE), 0);
+                            rosa = true;
+                            contCurado++;
+                        } else if (rosa) {
+                            al_draw_bitmap(pacienteCurado, (45 * BLOCKSIZE), (21 * BLOCKSIZE), 0);
+                        } else {
+                            al_draw_bitmap(pacienteRosa, (45 * BLOCKSIZE), (21 * BLOCKSIZE), 0);
+                        }
 
 
-                      al_flip_display();
-                      redesenha=false;
+
+
+            //seringas
+
+
+            if (posX2 >= (20 * BLOCKSIZE) && posX2 <= (21 * BLOCKSIZE) && posY2 >= (5 * BLOCKSIZE) && posY2 <= (6 * BLOCKSIZE) && !p7) {
+                p7 = true;
+                p1 = true;
+            }
+            if (!p7) {
+                al_draw_bitmap(seringaAmarela, (20 * BLOCKSIZE), (5 * BLOCKSIZE), 0);
+            }
+
+            if (posX2 >= (20 * BLOCKSIZE) && posX2 <= (21 * BLOCKSIZE) && posY2 >= (8 * BLOCKSIZE) && posY2 <= (9 * BLOCKSIZE) && !p8) {
+                p8 = true;
+                p2 = true;
+            }
+            if (!p8) {
+                al_draw_bitmap(seringaRoxa, (20 * BLOCKSIZE), (8 * BLOCKSIZE), 0);
+            }
+
+            if (posX2 >= (23 * BLOCKSIZE) && posX2 <= (24 * BLOCKSIZE) && posY2 >= (8 * BLOCKSIZE) && posY2 <= (9 * BLOCKSIZE) && !p9) {
+                p9 = true;
+                p3 = true;
+            }
+            if (!p9) {
+                al_draw_bitmap(seringaVerde, (23 * BLOCKSIZE), (8 * BLOCKSIZE), 0);
+            }
+
+            if (posX2 >= (26 * BLOCKSIZE) && posX2 <= (27 * BLOCKSIZE) && posY2 >= (8 * BLOCKSIZE) && posY2 <= (9 * BLOCKSIZE) && !p10) {
+                p10 = true;
+                p4 = true;
+            }
+            if (!p10) {
+                al_draw_bitmap(seringaVermelha, (26 * BLOCKSIZE), (8 * BLOCKSIZE), 0);
+            }
+
+            if (posX2 >= (29 * BLOCKSIZE) && posX2 <= (30 * BLOCKSIZE) && posY2 >= (5 * BLOCKSIZE) && posY2 <= (6 * BLOCKSIZE) && !p11) {
+                p11 = true;
+                p5 = true;
+            }
+            if (!p11) {
+                al_draw_bitmap(seringaLaranja, (29 * BLOCKSIZE), (5 * BLOCKSIZE), 0);
+            }
+
+            if (posX2 >= (29 * BLOCKSIZE) && posX2 <= (30 * BLOCKSIZE) && posY2 >= (8 * BLOCKSIZE) && posY2 <= (9 * BLOCKSIZE) && !p12) {
+                p12 = true;
+                p6 = true;
+            }
+            if (!p12) {
+                al_draw_bitmap(seringaRosa, (29 * BLOCKSIZE), (8 * BLOCKSIZE), 0);
+            }
+
+
+                al_flip_display();
+                redesenha=false;
+
+                if(contCurado == 6){
+                    cout << "aewwwww caraleouuuuu" << endl;
+                }
             }
         }
     }
