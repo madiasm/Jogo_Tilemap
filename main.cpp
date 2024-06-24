@@ -15,8 +15,6 @@ using namespace std;
 enum KEYS{UP, DOWN, LEFT, RIGHT , W, S, A, D};
 ALLEGRO_BITMAP *bloco2 = NULL;
 ALLEGRO_BITMAP *bloco1 = NULL;
-ALLEGRO_BITMAP *bloco4 = NULL;
-ALLEGRO_BITMAP *bloco3 = NULL;
 int mapaAtual = 0;
 
 int mapa0[HMAPA][WMAPA] = {
@@ -133,10 +131,10 @@ void DrawMap2(){
     for(int i=0; i<HMAPA; i++){
         for(int j=0; j<WMAPA; j++){
             if(mapa2[i][j] == 0){
-                al_draw_bitmap(bloco4, j * BLOCKSIZE, i * BLOCKSIZE, 0);
+                al_draw_bitmap(bloco2, j * BLOCKSIZE, i * BLOCKSIZE, 0);
             }
             else{
-                al_draw_bitmap(bloco3, j * BLOCKSIZE, i * BLOCKSIZE, 0);
+                al_draw_bitmap(bloco1, j * BLOCKSIZE, i * BLOCKSIZE, 0);
         }
       }
     }
@@ -222,8 +220,6 @@ int main(){
 
     bloco2 = al_load_bitmap("Bloco2.bmp");
     bloco1 = al_load_bitmap("Bloco1.bmp");
-    bloco3 = al_load_bitmap("Bloco3.bmp");
-    bloco4 = al_load_bitmap("Bloco4.bmp");
 
     al_start_timer(timer);
 
@@ -605,4 +601,5 @@ if (!colisao(posX2 + 2, posY2)) {
 
     return 0;
 }
+
 
